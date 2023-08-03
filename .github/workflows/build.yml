@@ -1,0 +1,21 @@
+name: Build firmware
+on: push
+
+env:
+  ZEPHYR_VERSION: 3.4.0
+
+jobs:
+  Build:
+    name: build
+    runs-on: ubuntu-20.04
+    container: 
+      image:  ghcr.io/bcdevices/zephyr:v3.4.0-0
+      options: --user root
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: build
+      run: |
+        cd /usr/src/zephyr-3.4.0
+        west build --board nucleo_f207zg $GITHUB_WORKSPACE
