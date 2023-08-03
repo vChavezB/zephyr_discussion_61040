@@ -17,5 +17,12 @@ jobs:
         submodules: recursive
     - name: build
       run: |
+        mkdir build
         cd /usr/src/zephyr-3.4.0
-        west build --board nucleo_f207zg $GITHUB_WORKSPACE
+        west build --build-dir $GITHUB_WORKSPACE/build --board nucleo_f207zg $GITHUB_WORKSPACE
+    - name: Archive build results
+      uses: actions/upload-artifact@v2
+      with:
+          name: build
+          path: |
+              build
