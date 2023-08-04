@@ -51,10 +51,6 @@
 
 
 
-&mac {
-	status = "disabled";
-};
-
 &i2c1 {
 	status = "disabled";
 };
