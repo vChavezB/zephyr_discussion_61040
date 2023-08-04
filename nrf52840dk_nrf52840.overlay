@@ -15,7 +15,7 @@
 
 &spi1 {
 	cs-gpios = <&gpio0 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	status = "okay";
+	status = "disabled";
 	my_adin: adin2111@0{
 		compatible = "adi,adin2111";
 		reg = <0x0>;
