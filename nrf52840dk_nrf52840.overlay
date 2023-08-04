@@ -5,13 +5,7 @@
  */
 
 
-/ {
 
-	/* These aliases are provided for compatibility with samples */
-	aliases {
-		adin-1 = &my_adin;
-	};
-};
 
 &spi1 {
 	cs-gpios = <&gpio0 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
