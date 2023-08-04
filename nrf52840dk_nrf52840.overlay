@@ -16,32 +16,4 @@
 &spi1 {
 	cs-gpios = <&gpio0 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	status = "disabled";
-	my_adin: adin2111@0{
-		compatible = "adi,adin2111";
-		reg = <0x0>;
-		spi-max-frequency = <10000000>;
-		int-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
-		reset-gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
-		port1 {
-			local-mac-address = [ 00 E0 22 FE DA C8 ];
-		};
-		port2 {
-			local-mac-address = [ 00 E0 22 FE DA C8 ];
-		};
-		mdio: mdio {
-			compatible = "adi,adin2111-mdio";
-			#address-cells = <1>;
-			#size-cells = <0>;
-			phy@1 {
-			  reg = <0x1>;
-			  compatible = "adi,adin2111-phy";
-			  status = "okay";
-			};
-			phy@2 {
-			  reg = <0x2>;
-			  compatible = "adi,adin2111-phy";
-			  status = "okay";
-			};
-		};
-	};
 };
