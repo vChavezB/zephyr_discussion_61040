@@ -23,7 +23,6 @@ LOG_MODULE_REGISTER(net_dhcpv4_client_sample, LOG_LEVEL_DBG);
 static struct net_mgmt_event_callback mgmt_cb;
 
 static const struct device *adin = NULL;
-#define ADIN_DEVICE DT_ALIAS(adin_1)
 
 static void handler(struct net_mgmt_event_callback *cb,
 		    uint32_t mgmt_event,
@@ -66,7 +65,7 @@ void main(void)
 
 	LOG_INF("Run dhcpv4 client");
 
-    adin = DEVICE_DT_GET(ADIN_DEVICE);
+    //adin = DEVICE_DT_GET(ADIN_DEVICE);
     if(adin == NULL){
         LOG_INF("adin device was not found");
     }
