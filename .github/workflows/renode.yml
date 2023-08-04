@@ -1,0 +1,60 @@
+name: Build firmware
+on: push
+
+env:
+  ZEPHYR_VERSION: 3.4.0
+
+jobs:
+  Build:
+    name: build
+    runs-on: ubuntu-20.04
+    container: 
+      image:  ghcr.io/bcdevices/zephyr:v3.4.0-0
+      options: --user root
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: build
+      run: |
+        mkdir build
+        cd /usr/src/zephyr-3.4.0
+        west build --build-dir $GITHUB_WORKSPACE/build --board nrf52840dk_nrf52840 $GITHUB_WORKSPACE
+    - name: Archive build results
+      uses: actions/upload-artifact@v2
+      with:
+          name: zephyr-build
+          path: |
+              build/zephyr/zephyr.elf
+  test:
+    needs: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+        
+      - name: Download zephyr binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: zephyr-build
+
+      - name: Run tests on Renode stable release
+        uses: antmicro/renode-test-action@v2.0.0
+        if: always()
+        with:
+            renode-version: '1.13.3'
+            tests-to-run: 'test.robot'
+            renode-path: renode-1.13
+            artifacts-path: ${{ github.workspace }}
+
+
+      - name: Archive Renode release results
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+            name: test-results-stable
+            path: |
+                report.html
+                log.html
+                robot_output.xml
+  
